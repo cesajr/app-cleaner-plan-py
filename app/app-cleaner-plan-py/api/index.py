@@ -20,25 +20,7 @@ def index():
         uploaded_file = request.files['file']
         if uploaded_file.filename.endswith('.xlsx'):
             df = pd.read_excel(uploaded_file, sheet_name=0)
-            # Identificação automática da coluna de coordenadas
-            colunas_normalizadas = {col.lower().strip(): col for col in df.columns}
-            possiveis_nomes = ['coordenadas', 'coord', 'coordenadas gps']
-            col_coordenadas = None
-            for nome in possiveis_nomes:
-                if nome in colunas_normalizadas:
-                    col_coordenadas = colunas_normalizadas[nome]
-                    break
-            if col_coordenadas is None:
-                return "Coluna de coordenadas não encontrada!"
-            # Limpeza e separação
-            df[col_coordenadas] = df[col_coordenadas].astype(str).str.strip().str.replace('\n', '', regex=True)
-            df[['latitude', 'longitude']] = df[col_coordenadas].str.split('|', expand=True)
-            df['latitude'] = df['latitude'].str.strip().str.replace(',', '.')
-            df['longitude'] = df['longitude'].str.strip().str.replace(',', '.')
-            df['latitude'] = pd.to_numeric(df['latitude'], errors='coerce')
-            df['longitude'] = pd.to_numeric(df['longitude'], errors='coerce')
-            df.drop(columns=[col_coordenadas], inplace=True)
-            # Salvar para download
+            # ... (restante do seu processamento)
             output = io.BytesIO()
             with pd.ExcelWriter(output, engine='openpyxl') as writer:
                 df.to_excel(writer, index=False)
