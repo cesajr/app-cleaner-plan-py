@@ -25,7 +25,7 @@ if uploaded_file:
     
     # 3. Identificação automática da coluna de coordenadas
     colunas_normalizadas = {col.lower().strip(): col for col in df.columns}
-    possiveis_nomes = ['coordenadas']
+    possiveis_nomes = ['coordenadas', 'coord', 'coordenadas gps', 'COORDENADAS', 'COORDENADAS GPS']
     col_coordenadas = None
     for nome in possiveis_nomes:
         if nome in colunas_normalizadas:
